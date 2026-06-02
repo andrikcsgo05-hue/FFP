@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Footfetish Playbook | Professional Edition</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --panel: #111111;
+            --accent: #ff66cc; /* Неоново фіолетово-рожевий колір */
+            --text: #e0e0e0;
+            --muted: #555;
+            --border: #222;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* НАВІГАЦІЯ */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background: #181818;
+            padding: 6px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--muted);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 11px;
+            transition: 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 102, 204, 0.4);
+        }
+
+        /* КОНТЕНТ */
+        .content-section {
+            display: none;
+            width: 100%;
+            max-width: 1300px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .content-section.active { display: block; }
+
+        /* СТИЛІ ДЛЯ КАРТИ ТАРО */
+        .tarot-zone {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #0d0d0d;
+            padding: 30px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .tarot-title {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .tarot-title span { color: var(--accent); text-shadow: 0 0 10px rgba(255, 102, 204, 0.2); }
+
+        .card-flip-container {
+            perspective: 1000px;
+            width: 220px;
+            height: 320px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card-flip-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #141414 0%, #080808 100%);
+            border: 2px solid #222;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent);
+        }
+
+        .card-front .neon-eye {
+            font-size: 40px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 102, 204, 0.6);
+        }
+
+        .card-front p {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            color: #555;
+            margin: 0;
+        }
+
+        .card-back {
+            background: #181818;
+            border: 2px solid var(--accent);
+            transform: rotateY(180deg);
+        }
+
+        .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+        }
+
+        /* ПАНЕЛЬ РАНДОМУ */
+        .random-generator-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            text-align: center;
+        }
+
+        .random-display-box {
+            display: none;
+            margin-top: 25px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 30px;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            align-items: center;
+            text-align: left;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            animation: slideDown 0.4s ease-out;
+        }
+
+        /* СЮЖЕТИ */
+        .story-container {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 40px;
+            margin-bottom: 60px;
+            background: var(--panel);
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .story-container.triple-layout-mode {
+            grid-template-columns: 350px 1fr 350px !important;
+            max-width: 1400px;
+        }
+
+        .story-content { padding: 50px; }
+
+        .story-content h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 0 0 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .story-content p { font-size: 16px; line-height: 1.8; color: #ccc; margin-bottom: 20px; }
+        .story-content p strong { color: #fff; }
+
+        .photo-window { background: #000; position: relative; overflow: hidden; border-left: 1px solid var(--border); width: 100%; height: 100%; }
+        .photo-window img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+        .story-container:hover .photo-window img { opacity: 1; transform: scale(1.03); }
+        .photo-window .label { position: absolute; bottom: 20px; right: 20px; background: var(--accent); color: #000; padding: 5px 15px; font-weight: 800; font-size: 10px; text-transform: uppercase; border-radius: 4px; }
+
+        .left-photo-window {
+            display: none;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid var(--border);
+            width: 100%;
+            height: 100%;
+        }
+        .left-photo-window img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+        .story-container:hover .left-photo-window img { opacity: 1; transform: scale(1.03); }
+
+        .quest-choice-block {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            border-top: 1px solid #222;
+            padding-top: 25px;
+        }
+
+        .quest-btn {
+            background: #181818;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 15px 25px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            flex: 1;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .quest-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(255, 102, 204, 0.02);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 102, 204, 0.1);
+        }
+
+        .quest-btn span {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* СТИЛІ ДЛЯ ГАРЯЧИХ КЛІКАБЕЛЬНИХ СЛІВ-ДІЙ (СЮЖЕТ IV) */
+        .hot-action-word {
+            color: var(--accent);
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(255, 102, 204, 0.3);
+            border-bottom: 1px dashed var(--accent);
+            padding: 0 2px;
+            transition: 0.2s ease;
+        }
+        .hot-action-word:hover {
+            color: #000;
+            background: var(--accent);
+            text-shadow: none;
+            border-radius: 4px;
+        }
+
+        /* ГАЛЕРЕЇ */
+        .grid-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; width: 100%; }
+        .card { background: var(--panel); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; height: 600px; }
+        .img-box { flex-grow: 1; position: relative; overflow: hidden; background: #080808; }
+        .img-box img { width: 100%; height: 100%; object-fit: contain; position: absolute; transform-origin: center; cursor: move; }
+        .controls { padding: 20px; background: #181818; border-top: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .slider { width: 100%; -webkit-appearance: none; height: 4px; background: #333; border-radius: 2px; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; cursor: pointer; }
+        .title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #888; }
+        .title span { color: var(--accent); }
+
+        @media (max-width: 950px) {
+            .story-container, .story-container.triple-layout-mode { grid-template-columns: 1fr !important; }
+            .photo-window, .left-photo-window { height: 400px; border-left: none; border-right: none; border-top: 1px solid var(--border); }
+            .left-photo-window { display: block !important; order: 3; }
+            .grid-layout { grid-template-columns: 1fr; }
+            .card { height: auto; }
+            .quest-choice-block { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-container">
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('home', this)">✦ Сценарії</button>
+        <button class="tab-btn" onclick="switchTab('nastya', this)">Настінька</button>
+        <button class="tab-btn" onclick="switchTab('nika', this)">Nika</button>
+        <button class="tab-btn" onclick="switchTab('anya', this)">Anya</button>
+        <button class="tab-btn" onclick="switchTab('random', this)">Рандом</button>
+    </div>
+</div>
+
+<!-- СЦЕНАРІЇ НА ГОЛОВНІЙ -->
+<div id="home" class="content-section active">
+    
+    <!-- БЛОК КАРТИ ФЕТІШ-ТАРО -->
+    <div class="tarot-zone">
+        <div class="tarot-title">🔮 Твоя <span>Картка Долі</span> на цю ніч</div>
+        
+        <div class="card-flip-container" id="tarotCard" onclick="revealTarotCard()">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="neon-eye">👁️</div>
+                    <p>Клікни для ритуалу</p>
+                </div>
+                <div class="card-back">
+                    <img id="tarotCardImg" src="" alt="Твоя Богиня">
+                </div>
+            </div>
+        </div>
+
+        <div id="tarotResult" class="tarot-result-box">
+            <h4 id="tarotGirlName" style="color: var(--accent); font-size: 20px; text-transform: uppercase; margin: 0;">Богиня</h4>
+            <div id="tarotOrderText" class="tarot-order">Наказ...</div>
+            <button class="action-btn-neon" style="margin-top: 20px; padding: 8px 20px; font-size: 11px;" onclick="resetTarotCard(); event.stopPropagation();">🔄 Спробувати знову</button>
+        </div>
+    </div>
+
+    <!-- КНОПКА ГЕНЕРАТОРА РАНДОМУ ДЛЯ РОЗРЯДКИ -->
+    <div class="random-generator-container">
+        <button class="action-btn-neon" onclick="generateRandomRelax()">🎲 Випадковий Кадр для Розрядки</button>
+        
+        <div id="randomRelaxBox" class="random-display-box">
+            <div class="random-img-wrap">
+                <img id="randomRelaxImg" src="" alt="Кадр для розрядки">
+            </div>
+            <div class="random-text-wrap">
+                <h3 id="randomRelaxTitle">Твоя розрядка</h3>
+                <div id="randomRelaxPhrase" class="random-phrase">"Заплющ очі та уяви цей дотик..."</div>
+                <p style="color: #666; font-size: 13px; margin: 0;">Тисни кнопку знову, щоб змінити кадр та фразу.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- СЮЖЕТ I: ФОКУС НА ВОЛОГОМУ ПОВ ПЕСТОЩАХ (ЛОГІЧНО ЧИСТІЙ)[cite: 2] -->
+    <div class="story-container">
+        <div class="story-content">
+            <h2>Сюжет I: Ефект Носочка. Ранкова Ніжність</h2>
+            <p><strong>Ніжне домашнє занурення:</strong> Настя розслаблено лежить на простирадлах, закинувши руки за голову[cite: 2]. На ній тільки коротка майка та ці соковиті жовті шкарпетки[cite: 2]. Ти падаєш перед нею на коліна, повністю зосереджуючись на її ногах[cite: 2]. Твої долоні плавно обхоплюють її щиколотки, фіксуючи ступні прямо перед твоїм обличчям[cite: 2].</p>
+            <p>Ти нахиляєш і зубами повільно, акуратно стягуєш трикотаж із її гарячої п'ятки, звільняючи солодку дівочу шкіру від тканини[cite: 2]. Перед твоїми очима відкривається бездоганний <strong>вигляд зверху (POV)</strong>[cite: 2]. Ти повністю виключаєш ручний контакт і починаєш працювати виключно вологим язиком: робиш довгі, глибокі мазки від самої п'ятки вздовж усього рельєфу її підйому, змушуючи пальчики Насті чутливо здригатися від кожного дотику...[cite: 2]</p>
+        </div>
+        <div class="photo-window" onmouseenter="document.getElementById('story11Img').src='podruga_pov.jpg'" onmouseleave="document.getElementById('story11Img').src='podruga_socks.jpg'">
+            <div class="story-inline-ctrls">
+                <button class="inline-btn active" id="btnSock" onclick="toggleStory11('podruga_socks.jpg', this); event.stopPropagation();">🧦 Носок</button>
+                <button class="inline-btn" id="btnBare" onclick="toggleStory11('podruga_pov.jpg', this); event.stopPropagation();">👣 Боса</button>
+            </div>
+            <img id="story11Img" src="podruga_socks.jpg" alt="Nastya Socking Pack">
+            <div class="label">Visual: Interactive Socking</div>
+        </div>
+    </div>
+
+    <!-- СЮЖЕТ II: КВЕСТ НІКИ — РОМАНТИЧНИЙ ТА ПАЛКИЙ ЕКСТАЗ У VIP-НЕОНІ[cite: 2] -->
+    <div class="story-container" id="story12Container">
+        <div class="left-photo-window" id="questLeftWindow">
+            <img src="nika6.jpg" alt="Nika Left Vibe">
+        </div>
+        <div class="story-content">
+            <h2>Сюжет II: Нічний Квест. Приватний Каприз Ніки</h2>
+            <div id="questText">
+                <p><strong>Зав'язка історії:</strong> Глибока ніч[cite: 2]. VIP-кімната клубу повністю залита глибоким фіолетовим неоном, а простір пульсують від приглушених басів[cite: 2]. Ніка розслаблено відкидається на шкіряний диван і повільно, з викликом закидає свої розкішні стрункі ніжки на столик прямо перед твоїм обличчям[cite: 2].</p>
+                <p>Її чорні босоніжки на тонкій високій шпильці грайливо похитуються, ледь тримаючись на кінчиках пальців[cite: 2]. Ти відчуваєш шалену напругу[cite: 2]. Вона дивиться на твій напружений член і тихо каже: <em>«Ну і чого ти сидиш? Роби щось...»</em>[cite: 2] Як ти вчиниш?</p>
+            </div>
+            <div class="quest-choice-block" id="questChoices">
+                <button class="quest-btn" onclick="chooseQuestBranch('soft')">
+                    <span>Гілка А: Повна ніжність</span>
+                    Зняти босоніжок і почати повільно, ніжно облизувати її теплий підйом стопи...[cite: 2]
+                </button>
+                <button class="quest-btn" onclick="chooseQuestBranch('hard')">
+                    <span>Гілка Б: Дика пристрасть</span>
+                    Змусити її зняти підбори, плюнути на член та почати гарячий ручний інтерактив...[cite: 2]
+                </button>
+            </div>
+        </div>
+        <div class="photo-window" id="questRightWindow">
+            <img id="questImg" src="nika1.jpg" alt="Nika Quest">
+            <div class="label" id="questLabel">Visual: Quest Start</div>
+        </div>
+    </div>
+
+    <!-- СЮЖЕТ III: ГЛЯНЦЕВИЙ СТРИПТИНГ НАСТІ (ЧИСТИЙ ФУТДЖОБ НА ПІДЛОЗІ БЕЗ РУК)[cite: 2] -->
+    <div class="story-container" id="story15Container">
+        <div class="left-photo-window" id="nastyaStepLeft">
+            <img src="podruga_mirror.jpg" alt="Nastya Left Action">
+        </div>
+        <div class="story-content">
+            <h2>Сюжет III: Модельний Каприз. Гримерний Конструктор</h2>
+            <div id="nastyaStepText">
+                <p><strong>Зав'язка історії:</strong> Вечір після великого модного показу[cite: 2]. Ти заходиш у закриту VIP-гримерку студії, де панує напівтемрява, розбавлена м'яким фіолетовим неоном від дзеркал[cite: 2]. Настя втомлено, але шалено грайливо відкидається на шкіряний диван прямо у своїй розкішній червоній сукні[cite: 2].</p>
+                <p>Її витончені червоні туфлі на високій шпильці ледь тримаються на кінчиках пальців, демонструючи крутий, натягнутий підйом стопи[cite: 2]. Вона помічає твій важкий погляд, хтиво посміхається і підносить ніжки прямо до твого обличчя: <em>«Я так втомилася від цих підборів... Ну ж бо, звільни мої ніжки і роби щось цікаве...»</em>[cite: 2] Якою буде твоя перша дія?</p>
+            </div>
+            <div class="quest-choice-block" id="nastyaStepChoices">
+                <button class="quest-btn" onclick="executeNastyaBranch('A_start')">
+                    <span>Гілка А: Витончена ініціатива</span>
+                    Акуратно двома пальцями зняти шпильки, ніжно цілуючи її гарячу шкіру...[cite: 2]
+                </button>
+                <button class="quest-btn" onclick="executeNastyaBranch('B_start')">
+                    <span>Гілка Б: Модельний контраст</span>
+                    Владно сказати: «Зніми їх сама на підлогу». Змусити її грати за твоїми правилами...[cite: 2]
+                </button>
+            </div>
+        </div>
+        <div class="photo-window" id="nastyaStepRight">
+            <img id="nastyaStepImg" src="podruga_red_dress.jpg" alt="Nastya Step Visual">
+            <div class="label" id="nastyaStepLabel">Visual: Backstage Start</div>
+        </div>
+    </div>
+
+    <!-- СЮЖЕТ IV: ІНТЕРТИВНА КАРТКА З ГАРЯЧИМИ СЛОВАМИ (УЛЬТРА-ДЕТАЛІЗОВАНИЙ ЗА СМОКТ ПАЛЬЧИКА)[cite: 2] -->
+    <div class="story-container">
+        <div class="story-content">
+            <h2>Сюжет IV: Нічний Бартер. Чуттєве Роззування Насті</h2>
+            
+            <div id="hotStoryText">
+                <p><strong>Етап 1 (Червоні підбори):</strong> Глибока ніч, кімната повністю залита пристрасним, густим фіолетовим неоновим напівмороком[cite: 2]. Настя ліниво й неймовірно зухвало відкидається на простирадла ліжка прямо у своїй обтислій червоній сукні[cite: 2]. Вона повільно, з викликом похитує витонченою ніжкою, змушуючи крутий рельєф підйому натягуватися до межі[cite: 2].</p>
+                <p>Вона помічає, як твій погляд буквально пропалює її взуття, хтиво посміхається і шепоче: <em>«Я знаю, як дико твій член реагує на моє взуття... Ну що, давай зіграємо в гру. Якщо ти прямо зараз обережно <span class="hot-action-word" onclick="triggerHotAction(1)">знімеш ці червоні шпильки</span>, я покажу тобі дещо набагато затишніше...»</em>[cite: 2]</p>
+            </div>
+        </div>
+        <div class="photo-window">
+            <img id="hotStoryImg" src="podruga_red_dress.jpg" alt="Interactive Nastya Visual">
+            <div class="label">Visual: Red Heels Dress</div>
+        </div>
+    </div>
+
+    <!-- 🔥 СЮЖЕТ V: УЛЬТИМАТИВНИЙ, НАЙБІЛЬШ РОЗПУСТНИЙ СЮЖЕТ З НАЙКРАЩОЮ ФОТКОЮ В БІКІНІ 🔥 -->
+    <div class="story-container">
+        <div class="story-content">
+            <h2>Сюжет V: Особистий Генеральний Екстаз. За лаштунками Дзеркал</h2>
+            <p><strong>Абсолютний, чистий еротичний хардкор:</strong> Фото, яке вона зробила в закритій дзеркальній студії суто для твоїх очей, оживає наяву. Настя стоїть посеред кімнати у цьому мікроскопічному, екстремально відвертому чорному боді-купальнику із глибочезним вирізом до самого пупка, який повністю виставляє на огляд її груди й розкішне, шовковисте тіло. Ти підходиш ззаду, грубо й владно хапаєш її за тонку талію, притискаючи спиною до себе.</p>
+            <p>Твій повністю оголений, палаючий член впирається їй між апетитні сідниці. Настя млосно закидає голову на твоє плече, важко дихаючи, і повільно опускається перед тобою на коліна прямо на гладку підлогу. Твій стовбур опиняється на рівні її обличчя. Вона обхоплює його своїми гарячими, ніжними пальчиками рук і починає жадібно, глибоко засмоктувати, роблячи тобі **ультра-соковитий, брудний мінет (deepthroat)**. Вона бере його до самої глотки, ловлячи очима твій погляд у відображенні дзеркала.</p>
+            <p>Але на цьому екстаз не зупиняється. Настя плавно відсторонюється, лягає на спину прямо перед тобою і закидає свої розкішні довгі ніжки тобі на плечі. <strong>Твої руки міцно стискають її стегна, повністю фіксуючи її тіло</strong>. Вона щільно стискає твій мокрий від слини член **прохолодними, атласними підошвами обох стоп**. Контраст гарячого металу та гладкої шкіри ніг зводить розуму. Настя починає ритмічно, шалено інтенсивно ковзати ніжками вгору і вниз, роблячи потужний **дзеркальний футджоб (footjob)**. На самій межі ти нахиляєшся вперед, ловиш її ротик пристрасним поцілунком, і в цей самий момент вибухаєш шаленою, густою серією гарячих струменів прямо їй на груди, живіт та солодкі підошви. Настя голосно стогне тобі в губи, а її пальчики ніг судомно стискають твої плечі, розмазуючи твій сік по своєму чорному боді... 🥵👣👅💦</p>
+        </div>
+        <div class="photo-window">
+            <img src="podruga_bikini.jpg" alt="Nastya Bikini Masterpiece">
+            <div class="label">Visual: Premium Bikini Exclusive</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- НАСТІНЬКА -->
+<div id="nastya" class="content-section">
+    <div class="grid-layout">
+        <div class="card"><div class="img-box"><img src="podruga_kroky.gif"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Топ <span>Кроки</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_pov.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">POV <span>Сосунка</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="milf_basyn.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Пальчик <span>Сосунка</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_shoes.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">В <span>Туфельці</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_socks.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Жовтий <span>Носок</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_top2.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Любима <span>Стопа</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_top3.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Витончений <span>Підйом</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_top4.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">М'яка <span>Текстура</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_top5.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Ідеальний <span>Профіль</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_model_walk.gif"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Преміум <span>Дефіле</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_mirror.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Дзеркальний <span>Arch</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_red_dress.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Червона <span>Шпилька</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_red_full.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Повний <span>Модельний</span> Зріст</div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_bikini.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Настя: <span>Особистий Боді-Купальник</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="podruga_model5.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Вільний <span>Слот Настя</span></div></div></div>
+    </div>
+</div>
+
+<!-- NIKA -->
+<div id="nika" class="content-section">
+    <div class="grid-layout">
+        <div class="card"><div class="img-box"><img src="nika1.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Шпилька для <span>Сосунка</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="nika2.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Ніжка на <span>Вагу</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="nika3.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Елітна <span>Прогулянка</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="nika4.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">П'єдестал для <span>Богині</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="nika5.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Неоновий <span>Прогрів</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="nika6.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Фінал в <span>Неоні</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="nika7.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Ніжна <span>Ніжка</span> на узбережжі</div></div></div>
+    </div>
+</div>
+
+<!-- ANYA -->
+<div id="anya" class="content-section">
+    <div class="grid-layout">
+        <div class="card"><div class="img-box"><img src="anya1.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Коктейль для <span>Богині</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="anya2.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Біла <span>Шпилька</span> для сосунка</div></div></div>
+        <div class="card"><div class="img-box"><img src="anya3.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Морська <span>Піна</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="anya_blue_shirt.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Блакитна <span>Сорочка</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="anya_studio_mom.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Аня та <span>Мама</span></div></div></div>
+    </div>
+</div>
+
+<!-- РАНДОМ -->
+<div id="random" class="content-section">
+    <div class="grid-layout">
+        <div class="card"><div class="img-box"><img src="random_barter.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Barter <span>Богиня</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="random_oksana.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Оксана на <span>Чиллі</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="random_chill.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Мая на <span>Матраці</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="random_oksana2.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Оксана: <span>Силует</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="random_maya_rock.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Мая: Скала <span>Спокуси</span></div></div></div>
+        <div class="card"><div class="img-box"><img src="random3.jpg"></div><div class="controls"><input type="range" class="slider" min="1" max="4" step="0.1" value="1"><div class="title">Вільний <span>Слот 6</span></div></div></div>
+    </div>
+</div>
+
+<script>
+    // 🔥 ЛОГІКА СЮЖЕТУ IV: ПЕРЕМКНЕННЯ ЕТАПІВ ЧЕРЕЗ ГАРЯЧІ СЛОВА В ТЕКСТІ (ЛОГІЧНО ЧИСТІ ФІНАЛИ)[cite: 2] 🔥
+    const hotStorySteps = {
+        1: {
+            img: "podruga_socks.jpg",
+            label: "Visual: Cozy Yellow Socks",
+            text: `<p><strong>Етап 2 (Жовті шкарпетки):</strong> Твої пальці акуратно розстібають тонкі ремінці, й розкішні червоні шпильки плавно злітають на підлогу[cite: 2]. Настя полегшено зітхає, перебираючи пальчиками у цих м'яких, обтислих жовтих шкарпетках[cite: 2].</p>
+                   <p>Вона плавно підносить свої соковиті стопи ближче до твого обличчя: <em>«О так, стає набагато затишніше... Але я знаю, що твій погляд прагне більшого. Якщо ти зараз пристрасно <span class="hot-action-word" onclick="triggerHotAction(2)">стягнеш ці шкарпетки моїми зубами</span>, я покажу тобі справжній модельний глянець підборів без жодної зайвої тканини...»</em>[cite: 2]</p>`
+        },
+        2: {
+            img: "podruga_shoes.jpg",
+            label: "Visual: High Heels ArchPOV",
+            text: `<p><strong>Етап 3 (Ефект підборів):</strong> Ти перехоплюєш ініціативу й зубами повільно стягуєш трикотаж із її гарячих п'яток, звільняючи ніжну босу шкіру[cite: 2]. Настя збуджено прикушує губу й вирішує підігріти твою пристрасть до максимуму[cite: 2].</p>
+                   <p>Вона повільно просуває свою витончену босу стопу в тонку відкриту босоніжку на високій шпильці й максимально, шалено вигинає свій <strong>ультимативний крутий підйом (arch)</strong> крупним планом прямо перед твоїми губами[cite: 2]. Соковитий глянець її педикюру відкрито лежить на шкіряній устілці, зводячи тебе з розуму[cite: 2]. Тобі залишається лише владно наказати їй <span class="hot-action-word" onclick="triggerHotAction(3)">скинути підбори і підійти босоніж</span>... </p>`
+        },
+        3: {
+            img: "podruga_kroky.gif",
+            label: "Visual: Barefoot Steps Vibe",
+            text: `<p><strong>Етап 4 (Босі кроки):</strong> Напруга вибухає! Босоніжка з тихим звуком падає на килим, і Настя повністю роззувається[cite: 2]. Вона плавно піднімається з дивана і починає пристрасно, шалено хтиво й млосно йти абсолютно босоніж по кімнаті прямо до тебе[cite: 2].</p>
+                   <p>Ти чуєш цей тихий, зводячий з розуму звук її босих кроків по підлозі, жадібно спостерігаючи, як натягується шкіра її підйому, а пальчики ніг м'яко здригаються від дикого збудження за крок від твого обличчя[cite: 2]. Вона плавно опускається поруч, і ти готовий <span class="hot-action-word" onclick="triggerHotAction(4)">прийняти її повне підкорення</span>...[cite: 2]</p>`
+        },
+        4: {
+            img: "podruga_pov.jpg",
+            label: "Visual: Final POV Extasy",
+            text: `<p><strong>💥 УЛЬТИМАТИВНИЙ ФІНАЛ СЮЖЕТУ IV (Шалений вологий засмокт пальчика):</strong> Повне підкорення[cite: 2]. Настя слухняно падає на спину, повністю розслаблена, млосна і гаряча від дикого передчуття[cite: 2].</p>
+                   <p>Вона закидає свої розкішні довгі ніжки високо вгору, кладучи соковиті, палаючі босі підошви прямо тобі на обличчя, губи та ніс[cite: 2]. Перед твоїми очима відкривається той самий бездоганний, чистий ракурс зверху — без фільтрів та одягу[cite: 2].</p>
+                   <p>Ти міцно, до болю ніжно стискаєш її гарячі стопи у своїх долонях[cite: 2]. Твій язик робить перший потужний мазок від самої п'ятки вздовж усього крутого підйому, а потім ти повільно і максимально глибоко <strong>втягуєш її довший палець у свій рот</strong>, щільно обхоплюючи губами й починаючи пристрасно, жадібно смоктати його[cite: 2]. Настя голосно стогне, вигинається дугою і міцно, судомно стискає твій член пальцями іншої ноги, ловлячи кожну фінальну гарячу пульсацію розрядки до самого ранку...[cite: 2]</p>
+                   <p style="text-align:center; margin-top:20px;"><span class="hot-action-word" style="font-size:13px; border:1px solid var(--accent); padding:5px 15px; border-radius:20px;" onclick="triggerHotAction(0)">🔄 Почати сесію роззування заново</span></p>`
+        },
+        0: {
+            img: "podruga_red_dress.jpg",
+            label: "Visual: Red Heels Dress",
+            text: `<p><strong>Початок сесії:</strong> Глибока ніч, кімната повністю залита пристрасним, густим фіолетовим неоновим напівмороком[cite: 2]. Настя ліниво й неймовірно зухвало відкидається на простирадла ліжка прямо у зустрічній обтислій червоній сукні[cite: 2]. Вона повільно, з викликом похитує витонченою ніжкою, змушуючи крутий рельєф підйому натягуватися до межі[cite: 2].</p>
+                   <p>Вона помічає, як твій погляд буквально пропалює її взуття, хтиво посміхається і шепоче: <em>«Я знаю, як дико ти хочеш мої ніжки прямо зараз... Ну що, давай зіграємо в гру. Якщо ти прямо зараз обережно <span class="hot-action-word" onclick="triggerHotAction(1)">знімеш ці червоні шпильки</span>, я покажу тобі дещо набагато затишніше...»</em>[cite: 2]</p>`
+        }
+    };
+
+    function triggerHotAction(stepIndex) {
+        const data = hotStorySteps[stepIndex];
+        document.getElementById('hotStoryImg').src = data.img;
+        document.getElementById('hotStoryLabel').innerText = data.label;
+        document.getElementById('hotStoryText').innerHTML = data.text;
+        document.getElementById('hotStoryText').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ЛОГІКА КВЕСТУ НАСТІ III (ЗВЕДЕННЯ ДО АНАТОМІЧНОЇ ЛОГІКИ ТА ЧИСТОГО ФУТДЖОБУ)[cite: 2]
+    function executeNastyaBranch(node) {
+        const textBlock = document.getElementById('nastyaStepText');
+        const choicesBlock = document.getElementById('nastyaStepChoices');
+        const container = document.getElementById('story15Container');
+        const leftWindow = document.getElementById('nastyaStepLeft');
+        const imgRight = document.getElementById('nastyaStepImg');
+        const labelRight = document.getElementById('nastyaStepLabel');
+
+        if (node === 'A_start') {
+            imgRight.src = 'podruga_pov.jpg';
+            labelRight.innerText = 'Visual: Living POV View';
+            container.classList.remove('triple-layout-mode');
+            leftWindow.style.display = 'none';
+            textBlock.innerHTML = `
+                <p><strong>Твоя дія:</strong> Ти акуратно опускаєшся на коліна, береш її гарячі щиколотки в долоні й повільно, пристрасно цілуючи шкіру, знімаєш червоні шпильки[cite: 2]. Настя задоволено зітхає, повністю витягуючи свої розкішні довгі ніжки прямо до твого обличчя[cite: 2].</p>
+                <p>Вона розслаблено спостерігає за тобою, але раптом у її погляді спалахує грайливий вогник[cite: 2]. Вона плавно підносить одну повністю босу стопу вперед і <strong>починає ніжно, дратуючи, мацати пальчиками ніг твій напружений член прямо через джинси</strong>, повільно водячи підошвою вгору і вниз[cite: 2]. Твоє збудження зашкалює[cite: 2]. Твої наступні дії?</p>
+            `;
+            choicesBlock.innerHTML = `
+                <button class="quest-btn" onclick="executeNastyaBranch('A_licc')"><span>Гілка А-1: Чесне вилизування</span>Смирно підкоритися, заплющити очі й почати жадібно вилизувати її солодкий підйом...[cite: 2]</button>
+                <button class="quest-btn" onclick="executeNastyaBranch('A_pants')"><span>Гілка А-2: Гра без штанів</span>Перехопити ініціативу, дозволити її підошвам повністю тертися об твій оголений член...[cite: 2]</button>
+            `;
+        } else if (node === 'A_licc') {
+            textBlock.innerHTML = `
+                <p><strong>💥 ФІНАЛ А-1 (Чесний екстаз сосунка):</strong> Ти повністю підкоряєшся її капризу[cite: 2]. Твій язик робить перший вологий мазок від самої п'ятки вздовж усього крутого натягнутого підйому[cite: 2]. Настя солодко здригається, її пальчики на ногах міцно стискаються від шаленого задоволення, поки ти жадібно засмоктуєш кожен з них[cite: 2].</p>
+                <p>Поки ти вилизуєш чутливий рельєф дівочої шкіри, Настя хтиво мурчить і <strong>починає активно, ритмічно надрочувати твій стовбур рукою</strong>[cite: 2]. На самій межі ти глибоко втягуєш її палець у рот і кінчаєш гарячою серією струменів...[cite: 2]</p>
+            `;
+            choicesBlock.innerHTML = `<button class="quest-btn" style="text-align:center;" onclick="resetNastyaStepQuest()">🔄 Спробувати інший ланцюжок дій</button>[cite: 2]`;
+        } else if (node === 'A_pants') {
+            textBlock.innerHTML = `
+                <p><strong>💥 ФІНАЛ А-2 (Повний контакт під сорочкою — АНАТОМІЧНО ПРАВИЛЬНА ВЕРСІЯ):</strong> Гра стає занадто відвертою[cite: 2]. Настя грайливо підчіплює пальцями ніг твій ремінь, і ти миттєво скидаєш штани, залишаючись повністю відкритим перед її поглядом[cite: 2]. Вона пристрасно посміхається і нахиляється вперед, дозволяючи своїм гарячим підошвам щільно обхопити твій член.</p>
+                <p>Вона робить інтенсивний, шалений футджоб, міцно стискаючи твій стовбур ніжною дівочою шкірою стоп, поки твої руки пристрасно ковзають по її стегнах та сильно стискають її тонку талію. На фінальній пульсації ти вибухаєш густим соком прямо на її солодкі підошви, а Настя міцно затискає твій орган пальцями ніг, ловлячи кожну гарячу краплю...</p>
+            `;
+            choicesBlock.innerHTML = `<button class="quest-btn" style="text-align:center;" onclick="resetNastyaStepQuest()">🔄 Спробувати інший ланцюжок дій</button>[cite: 2]`;
+        } else if (node === 'B_start') {
+            imgRight.src = 'podruga_mirror.jpg';
+            labelRight.innerText = 'Visual: Mirror Reflections';
+            container.classList.add('triple-layout-mode');
+            leftWindow.style.display = 'block';
+            textBlock.innerHTML = `
+                <p><strong>Твоя дія:</strong> Ти залишаєтеся стояти на повний зріст і суворо кажеш: «Ні, Насть. Зніми їх сама на підлогу»[cite: 2]. Такий нахабний тон миттєво змінює її настрій[cite: 2]. Вона хтиво посміхається, скидає шпильки й повільно <strong>сідає прямо на велику блискучу дзеркальну підлогу гримерки</strong>, демонструючи крутий підйом, який ідеально подвоюється у відображенні знизу[cite: 2].</p>
+                <p>Вона повністю вмикає режим домінуючої Топ-Моделі[cite: 2]. Дивлячись на тебе знизу вгору, вона владно закидає одну босу ножку тобі на стегно, треться підошвою об твій пах і каже: «Раз ти такий сміливий... роздягайся повністю і падай переді мною на коліна»[cite: 2]. Твій вибір?</p>
+            `;
+            choicesBlock.innerHTML = `
+                <button class="quest-btn" onclick="executeNastyaBranch('B_mirror')"><span>Гілка Б-1: Дзеркальний футджоб</span>Повністю роздягнутися, впасти на дзеркальну підлогу і прийняти її правила гри...[cite: 2]</button>
+                <button class="quest-btn" onclick="executeNastyaBranch('B_rebel')"><span>Гілка Б-2: Грубе перехоплення</span>Відмовитися роздягатися, грубо перехопити її за талію і притиснути стопи до обличчя...[cite: 2]</button>
+            `;
+        } else if (node === 'B_mirror') {
+            textBlock.innerHTML = `
+                <p><strong>💥 ФІНАЛ Б-1 (ГЛЯНЦЕВИЙ ФУТДЖОБ ОБОМА ПІДОШВАМИ БЕЗ РУК):</strong> Ти повністю скидаєш одяг і падаєш на коліна на холодну дзеркальну підлогу студії[cite: 2]. Настя повністю забирає твою ініціативу[cite: 2]. Твої руки залишаються лежати на склі, а рот закритий — це чистий, вивірений тріумф її стоп[cite: 2].</p>
+                <p>Вона щільно, намертво стискає твій палаючий орган між двома ідеально чистими, атласними підошвами своїх стоп[cite: 2]. Контраст її прохолодної дівочої шкіри та твого палаючого металу всередині зводить з розуму[cite: 2]. Вона починає ритмічно, шалено інтенсивно рухати ніжками вгору і вниз, роблячи глибокий, потужний футджоб[cite: 2]. Ти бачиш кожен рух шкіри під кутом 360 градусів через дзеркало знизу[cite: 2]. Ти вибухаєш густим, гарячим залпом прямо на скло і її пальчики, а Настя плавно розмазує твій сік своїми бездоганними п'ятками по склу...[cite: 2]</p>
+            `;
+            choicesBlock.innerHTML = `<button class="quest-btn" style="text-align:center;" onclick="resetNastyaStepQuest()">🔄 Спробувати інший ланцюжок дій</button>[cite: 2]`;
+        } else if (node === 'B_rebel') {
+            textBlock.innerHTML = `
+                <p><strong>💥 ФІНАЛ Б-2 (Пристрасний вологий засмокт):</strong> Ти не збираєшся підкорятися її домінуванню[cite: 2]. Ти залишаєшся в одязі, різко нахиляєєтеся і грубо хапаєте її за тонкі щиколотки, притискаючи солодкі стопи прямо до свого рота[cite: 2]. Настя дико збуджено зойкає від такої впевненості[cite: 2].</p>
+                <p>Ти буквально впиваєшся губами в її босу стопу, глибоко й жадібно лижучи між пальчиками й повністю втягуючи її довший палець у рот[cite: 2]. Вона починає активно розстібати твою ширінку, випускаючи стовбур назовні й починає шалено мастурбувати тебе, поки ти ковзаєш язиком по її рельєфу[cite: 2]. Ти вибухаєш гарячим фіналом їй на білу сукню та стегна...[cite: 2]</p>
+            `;
+            choicesBlock.innerHTML = `<button class="quest-btn" style="text-align:center;" onclick="resetNastyaStepQuest()">🔄 Спробувати інший ланцюжок дій</button>[cite: 2]`;
+        }
+    }
+
+    function resetNastyaStepQuest() {
+        const container = document.getElementById('story15Container');
+        const textBlock = document.getElementById('nastyaStepText');
+        const choicesBlock = document.getElementById('nastyaStepChoices');
+        const leftWindow = document.getElementById('nastyaStepLeft');
+        const imgRight = document.getElementById('nastyaStepImg');
+        container.classList.remove('triple-layout-mode');
+        leftWindow.style.display = 'none';
+        imgRight.src = 'podruga_red_dress.jpg';
+        textBlock.innerHTML = `
+            <p><strong>Зав'язка історії:</strong> Вечір після великого модного показу[cite: 2]. Ти заходиш у закриту VIP-гримерку студії, де панує напівтемрява, розбавлена м'яким фіолетовим неоном від дзеркал[cite: 2]. Настя втомлено, але шалено грайливо відкидається на шкіряний диван прямо у зустрічній червоній сукні[cite: 2].</p>
+            <p>Її витончені червоні туфлі на високій шпильці ледь тримаються на кінчиках пальців, демонструючи крутий, натягнутий підйом стопи[cite: 2]. Вона помічає твій важкий погляд, хтиво посміхається і підносить ніжки прямо до твого обличчя: <em>«Я так втомилася від цих підборів... Ну ж бо, звільни мої ніжки і роби щось цікаве...»</em>[cite: 2] Якою буде твоя перша дія?</p>
+        `;
+        choicesBlock.innerHTML = `
+            <button class="quest-btn" onclick="executeNastyaBranch('A_start')"><span>Гілка А: Витончена ініціатива</span>Акуратно двома пальцями зняти шпильки, ніжно цілуючи її гарячу шкіру...[cite: 2]</button>
+            <button class="quest-btn" onclick="executeNastyaBranch('B_start')"><span>Гілка Б: Модельний контраст</span>Владно сказати: «Зніми їх сама на підлогу». Змусити її грати за твоїми правилами...[cite: 2]</button>
+        `;
+    }
+
+    // ЛОГІКА КВЕСТУ НІКИ II (ГЛИБОКА РОМАНТИКА ТА ОРАЛЬНИЙ ІНТЕРАКТИВ)[cite: 2]
+    function chooseQuestBranch(branch) {
+        const container = document.getElementById('story12Container');
+        const textBlock = document.getElementById('questText');
+        const choicesBlock = document.getElementById('questChoices');
+        const leftWindow = document.getElementById('questLeftWindow');
+        const imgRight = document.getElementById('questImg');
+        const labelRight = document.getElementById('questLabel');
+
+        if (branch === 'soft') {
+            container.classList.remove('triple-layout-mode');
+            leftWindow.style.display = 'none';
+            imgRight.src = 'nika7.jpg';
+            labelRight.innerText = 'Visual: Soft Beach Arch';
+            textBlock.innerHTML = `
+                <p><strong>Результат вибору (Гілка А — Повна ніжність):</strong> Ти акуратно просуваєш долоню под її щиколотку, розстібаєш тонкий ремінець, і витончений чорний босоніжок плавно падає на підлогу залу[cite: 2]. Ти береш її повністю босу стопу в руки[cite: 2]. Вона неймовірно ніжна й шовковиста на дотик[cite: 2].</p>
+                <p>Ніка млосно заплющує очі й глибше відкидається на шкіряні подушки, повністю довіряючи тобі[cite: 2]. Світло неону плавно окреслює її натягнутий підйом (arch)[cite: 2]. Ти нахиляєш обличчя і робиш довгий, гарячий мазок язиком від устілки до кінчиків пальців, змушуючи її солодко і голосно стогнати від задоволення[cite: 2]. Вона починає повільно перебирати пальчиками ніг, притискаючи свою гарячу підошву прямо до твоїх губ, повністю розчиняючись у твоїй ніжності...[cite: 2]</p>
+            `;
+        } else if (branch === 'hard') {
+            container.classList.add('triple-layout-mode');
+            leftWindow.style.display = 'block';
+            imgRight.src = 'nika5.jpg';
+            labelRight.innerText = 'Visual: Chilling Feet';
+            textBlock.innerHTML = `
+                <p><strong>Результат вибору (Гілка Б — Палка романтика та близькість):</strong> Напруга вибухає до ліміту! Твої руки миттєво зривають ці витончені чорні підбори з її ніг і з глухим звуком відкидають їх у куток кімнати[cite: 2]. Ніка пристрасно посміхається, залишаючись повністю босою у фіолетовому неоні[cite: 2].</p>
+                <p>Вона накопичує соковиту слину і повільно, тягуче плює прямо на твій палаючий член, підігріваючи атмосферу[cite: 2]. Між вами спалахує чиста, палка романтика: Ніка плавно обвиває своїми ніжними босими ніжками твій пах, притискаючи підошви до твоїх стегон[cite: 2]. Ця інтимна близькість зближує вас до межі[cite: 2].</p>
+                <p>Вона дивиться тобі прямо в очі глибоким, помутнілим від пристрасті поглядом[cite: 2], нахиляється вперед і ласкаво бере твій палаючий стовбур у свій гарячий, вологий ротик[cite: 2]. Її руки ніжно гладять твої плечі[cite: 2], а босі пальчики ніг пристрасно ковзають по твоїй шкірі в такт кожному руху губ[cite: 2].</p>
+                <p><strong>💥 ЯСКРАВИЙ РОМАНТИЧНИЙ ФІНАЛ:</strong> Ритм стає єдиним диханням на двох[cite: 2]. На самій межі екстазу вона робить глибокі, затяжні фрикції ротом[cite: 2], і ти вибухаєш потужною гарячою серією прямо їй на соковиті, вологі підошви[cite: 2]. Ніка солодко стогне тобі в губи[cite: 2], міцно притискаючись усім тілом[cite: 2], а її пальчики ніг судомно стискають твої стегна, ловлячи кожну фінальну гарячу пульсацію...[cite: 2]</p>
+            `;
+        }
+        choicesBlock.innerHTML = `<button class="quest-btn" style="text-align:center;" onclick="resetQuestXII()">🔄 Пройти квест заново (Змінити вибір)</button>[cite: 2]`;
+    }
+
+    function resetQuestXII() {
+        const container = document.getElementById('story12Container');
+        const textBlock = document.getElementById('questText');
+        const choicesBlock = document.getElementById('questChoices');
+        const leftWindow = document.getElementById('questLeftWindow');
+        const imgRight = document.getElementById('questImg');
+        container.classList.remove('triple-layout-mode');
+        leftWindow.style.display = 'none';
+        imgRight.src = 'nika1.jpg';
+        textBlock.innerHTML = `
+            <p><strong>Зав'язка історії:</strong> Глибока ніч[cite: 2]. Ви перебуваєте в закритій VIP-кімнаті елітного клубу, де стіни пулсують від приглушених басів, а простір залитий neon світлом[cite: 2]. Ніка розслаблено відкидається на шкіряний диван і повільно, з викликом закидає свої розкішні стрункі ніжки на столик прямо перед твоїм обличчям[cite: 2].</p>
+            <p>Її чорні босоніжки на тонкій високій шпильці грайливо похитуються, ледь тримаючись на пальчиках ніг[cite: 2]. Ти відчуваєш шалену напругу[cite: 2]. Вона дивиться на твій напружений член і тихо каже: <em>«Ну і чого ти сидиш? Роби щось...»</em>[cite: 2]</p>
+        `;
+        choicesBlock.innerHTML = `
+            <button class="quest-btn" onclick="chooseQuestBranch('soft')"><span>Гілка А: Повна ніжність</span>Акуратно зняти босоніжок і почати пестити її витончений підйом...[cite: 2]</button>
+            <button class="quest-btn" onclick="chooseQuestBranch('hard')"><span>Гілка Б: Дика пристрасть</span>Змусити її зняти підбори, плюнути на член та почати гарячий інтерактив...[cite: 2]</button>
+        `;
+    }
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).style.display = 'block';
+        btn.classList.add('active');
+    }
+
+    function toggleStory11(imgSrc, btn) {
+        document.getElementById('story11Img').src = imgSrc;
+        document.querySelectorAll('.story-inline-ctrls .inline-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    // СЛАЙДЕРИ ЗУМУ ГАЛЕРЕЙ
+    document.querySelectorAll('.card').forEach(card => {
+        const box = card.querySelector('.img-box');
+        const img = box.querySelector('img');
+        if (!img) return; 
+        const slider = card.querySelector('.slider');
+        let isDown = false, startX, startY, x = 0, y = 0, scale = 1;
+
+        slider.oninput = (e) => {
+            scale = e.target.value;
+            img.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+        };
+        box.onmousedown = (e) => {
+            if(scale <= 1) return;
+            isDown = true; startX = e.clientX - x; startY = e.clientY - y;
+            box.style.cursor = 'grabbing';
+        };
+        window.onmouseup = () => { isDown = false; if(box) box.style.cursor = 'default'; };
+        box.onmousemove = (e) => {
+            if(!isDown) return;
+            x = e.clientX - startX; y = e.clientY - startY;
+            img.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+        };
+        box.ontouchstart = (e) => {
+            if(scale <= 1) return;
+            isDown = true; startX = e.touches[0].clientX - x; startY = e.touches[0].clientY - y;
+        };
+        box.ontouchend = () => { isDown = false; };
+        box.ontouchmove = (e) => {
+            if(!isDown) return;
+            x = e.touches[0].clientX - startX; y = e.touches[0].clientY - startY;
+            img.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+        };
+    });
+</script>
+
+</body>
+</html>

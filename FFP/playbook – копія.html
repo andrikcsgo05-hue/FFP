@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Footfetish Playbook | Premium Zoom & Hardcore Edition</title>
+    <style>
+        :root {
+            --bg: #030303;
+            --panel: #0d0d0d;
+            --accent: #ff66cc;
+            --accent-glow: rgba(255, 102, 204, 0.4);
+            --text: #e0e0e0;
+            --muted: #666;
+            --border: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* НАВІГАЦІЯ */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            background: rgba(3, 3, 3, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background: #121212;
+            padding: 6px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--muted);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 11px;
+            transition: 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .content-section {
+            display: none;
+            width: 100%;
+            max-width: 1300px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content-section.active { display: block; }
+
+        /* КОЛЕСО РАНДОМУ */
+        .wheel-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            background: var(--panel);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+
+        .wheel-title {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .wheel-title span { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
+
+        .wheel-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin-bottom: 30px;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid var(--accent);
+            z-index: 10;
+            filter: drop-shadow(0 0 8px var(--accent));
+        }
+
+        .main-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid #181818;
+            box-shadow: 0 0 30px rgba(255, 102, 204, 0.2), inset 0 0 20px rgba(0,0,0,0.5);
+            background: conic-gradient(
+                #111 0deg 72deg, #161616 72deg 144deg, 
+                #111 144deg 216deg, #161616 216deg 288deg, 
+                #111 288deg 360deg
+            );
+            position: relative;
+            transition: transform 4s cubic-bezier(0.15, 0.85, 0.35, 1);
+            overflow: hidden;
+        }
+
+        .wheel-label {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            position: absolute;
+            top: 0; left: 0;
+            padding: 30px;
+            box-sizing: border-box;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        .action-btn-neon {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 14px 40px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 102, 204, 0.1);
+        }
+        .action-btn-neon:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 25px var(--accent);
+        }
+
+        /* ГАЛЕРЕЯ КАРТОК */
+        .grid-layout { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px; 
+            width: 100%; 
+        }
+
+        .card { 
+            background: var(--panel); 
+            border-radius: 20px; 
+            border: 1px solid var(--border); 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            height: 480px;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(255, 102, 204, 0.05);
+        }
+
+        .img-box { 
+            flex-grow: 1; 
+            position: relative; 
+            overflow: hidden; 
+            background: #050505; 
+        }
+        .img-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s ease;
+        }
+
+        .card-details { 
+            padding: 18px 20px; 
+            background: #111; 
+            border-top: 1px solid var(--border); 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-title { 
+            font-size: 12px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            color: #999; 
+        }
+        .card-title span { color: var(--accent); }
+        .click-hint { font-size: 10px; color: #444; text-transform: uppercase; font-weight: bold; }
+
+        /* LIGHTBOX З УЛЬТИМАТИВНИМ ЗУМОМ ТА ПЕРЕТЯГУВАННЯМ */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(3, 3, 3, 0.97);
+            z-index: 2000;
+            display: none;
+            grid-template-columns: 1fr 450px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .zoom-wrapper {
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .zoom-wrapper img {
+            max-width: 95%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            transform-origin: center center;
+            cursor: grab;
+            transition: transform 0.1s ease-out;
+        }
+        .zoom-wrapper img:active { cursor: grabbing; }
+
+        /* НЕОНОВИЙ КЕРУЮЧИЙ ПОВЗУНОК ЗУМУ */
+        .zoom-controls {
+            width: 300px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            background: #111;
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+        }
+        .zoom-slider {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+        }
+        .zoom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px; height: 16px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .lightbox-sidebar {
+            background: #0a0a0a;
+            border-left: 1px solid var(--border);
+            padding: 45px 35px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
+
+        .sidebar-content h3 {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 15px 0;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        /* ФІШКА: ШКАЛА ЗБУДЖЕННЯ */
+        .arousal-box {
+            background: #111;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #1a1a1a;
+            margin-bottom: 25px;
+        }
+        .arousal-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .arousal-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .arousal-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #ff0055);
+            box-shadow: 0 0 10px var(--accent);
+            transition: width 1.5s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        .sidebar-content p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .sidebar-content p strong { color: #fff; }
+
+        /* ФІШКА: ГЕНЕРАТОР БРУДНИХ НАКАЗІВ */
+        .bonus-order-box {
+            background: rgba(255,102,204,0.02);
+            border-left: 3px solid var(--accent);
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .btn-upgrade-ecstasy {
+            background: #141414;
+            border: 1px dashed var(--accent);
+            color: var(--accent);
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .btn-upgrade-ecstasy:hover {
+            background: rgba(255,102,204,0.1);
+            box-shadow: 0 0 15px rgba(255,102,204,0.2);
+        }
+
+        .close-lightbox {
+            background: transparent;
+            border: 1px solid #333;
+            color: #888;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 11px;
+            transition: 0.3s;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .close-lightbox:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 1000px) {
+            .lightbox { grid-template-columns: 1fr; grid-template-rows: 1fr 400px; overflow-y: auto; }
+            .lightbox-sidebar { border-left: none; border-top: 1px solid var(--border); padding: 25px; }
+            .grid-layout { grid-template-columns: 1fr; }
+            .card { height: 400px; }
+            .zoom-wrapper { height: 50vh; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-container">
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('home', this)">🔮 Колесо Долі</button>
+        <button class="tab-btn" onclick="switchTab('nastya', this)">Настінька</button>
+        <button class="tab-btn" onclick="switchTab('nika', this)">Nika</button>
+        <button class="tab-btn" onclick="switchTab('anya', this)">Anya</button>
+        <button class="tab-btn" onclick="switchTab('random', this)">Рандом</button>
+    </div>
+</div>
+
+<!-- ГОЛОВНА СТОРІНКА: КОЛЕСО РАНДОМУ -->
+<div id="home" class="content-section active">
+    <div class="wheel-zone">
+        <div class="wheel-title">🔮 Колесо <span>Експрес-Розрядки</span> Богинь</div>
+        
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <div class="main-wheel" id="fortuneWheel">
+                <div class="wheel-label" style="transform: rotate(0deg);">Настя</div>
+                <div class="wheel-label" style="transform: rotate(72deg);">Nika</div>
+                <div class="wheel-label" style="transform: rotate(144deg);">Anya</div>
+                <div class="wheel-label" style="transform: rotate(216deg);">Рандом</div>
+                <div class="wheel-label" style="transform: rotate(288deg);">Екстаз</div>
+            </div>
+        </div>
+
+        <button class="action-btn-neon" onclick="spinTheWheel()">🔥 Крутити Колесо</button>
+    </div>
+</div>
+
+<!-- НАСТІНЬКА -->
+<div id="nastya" class="content-section">
+    <div class="grid-layout">
+        <div class="card" onclick="openStory('Настінька: Топ Кроки', 'podruga_kroky.gif', '<strong>Атмосфера чистої спокуси:</strong> Вона повільно й грайливо дефілює босоніж прямо перед твоїм обличчям. Звук її кроків пульсує в мізках. Вона зупиняється над тобою, змушуючи твій погляд ковзати вгору по її витонченому підйому, і повільно опускає свою м\'яку, гарячу підошву тобі на губи.', 85)">
+            <div class="img-box"><img src="podruga_kroky.gif"></div>
+            <div class="card-details"><div class="card-title">Топ <span>Кроки</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: POV Сосунка', 'podruga_pov.jpg', '<strong>Чистий живий ракурс:</strong> Настя відкидається на диван, розвівши свої ідеальні довгі ніжки. Ти жадібно хапаєш її п\'ятку, наближаєш губи й починаєш пристрасно злизувати вологу з її довшого пальця, глибоко втягуючи його в рот і щільно обхоплюючи губами.', 95)">
+            <div class="img-box"><img src="podruga_pov.jpg"></div>
+            <div class="card-details"><div class="card-title">POV <span>Сосунка</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Пальчик Сосунка', 'milf_basyn.jpg', '<strong>Контраст після басейну:</strong> Настя лежить біля води, її розкішні стопи ще злегка вологі. Вона плавно обхоплює твій палаючий член ніжними прохолодними підошвами обох ніг. Ритмічно ковзаючи ними вгору і вниз, вона робить шалений глибокий футджоб.', 90)">
+            <div class="img-box"><img src="milf_basyn.jpg"></div>
+            <div class="card-details"><div class="card-title">Пальчик <span>Сосунка</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: В Туфельці', 'podruga_shoes.jpg', '<strong>Фетиш-класика:</strong> Витончена туфелька на шпильці ледь тримається на її п\'ятці, оголюючи крутий напружений підйом (arch). Вона дозволяє тобі гарячим язиком проникнути всередину туфлі, вилизуючи устілку прямо під її босою стопою.', 75)">
+            <div class="img-box"><img src="podruga_shoes.jpg"></div>
+            <div class="card-details"><div class="card-title">В <span>Туфельці</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Жовтий Носок', 'podruga_socks.jpg', '<strong>Домашній хардкор:</strong> Щільні жовті шкарпетки ідеально облягають її стопу. Вона грайливо штовхає тебе шкарпеткою в пах, а ти зубами повільно стягуєш трикотаж із її гарячої п\'ятки, звільняючи ніжну босу шкіру для гарячих поцілунків.', 80)">
+            <div class="img-box"><img src="podruga_socks.jpg"></div>
+            <div class="card-details"><div class="card-title">Жовтий <span>Носок</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Любима Стопа', 'podruga_top2.jpg', '<strong>Абсолютна досконалість:</strong> Ідеально чисті, гладкі рожеві підошви Насті знаходяться в сантиметрі від твоїх очей. Ти відчуваєш тонкий природний аромат її тіла. Твій язик повільно й глибоко промазує лінію її чутливої арки від п\'ятки до пальчиків.', 88)">
+            <div class="img-box"><img src="podruga_top2.jpg"></div>
+            <div class="card-details"><div class="card-title">Любима <span>Стопа</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Витончений Підйом', 'podruga_top3.jpg', '<strong>Анатомічний екстаз:</strong> Максимально високий, крутий вигин її стопи крупним планом. Настя хтиво вигинає пальчики ніг, поки ти цілуєш кожен міліметр її шкіри, змушуючи її тремтіти від дикого збудження та млосно стогнати.', 92)">
+            <div class="img-box"><img src="podruga_top3.jpg"></div>
+            <div class="card-details"><div class="card-title">Витончений <span>Підйом</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: М\'яка Текстура', 'podruga_top4.jpg', '<strong>Шовковий дотик:</strong> Ніжна, оксамитова текстура її шкіри без жодного фільтра. Ти притискаєш її гарячі стопи до своїх щік, а потім плавно переходиш до пристрасного вилизування ніжного рельєфу між її пальчиками.', 85)">
+            <div class="img-box"><img src="podruga_top4.jpg"></div>
+            <div class="card-details"><div class="card-title">М'яка <span>Текстура</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Ідеальний Профіль', 'podruga_top5.jpg', '<strong>Елітна лінія стопи:</strong> Бездоганний профіль стопи Топ-Моделі. Вона ліниво водить пальчиками ніг по твоїй ширінці, змушуючи твій член напружуватися до межі, поки ти жадібно ловиш ротом кожен її рух.', 87)">
+            <div class="img-box"><img src="podruga_top5.jpg"></div>
+            <div class="card-details"><div class="card-title">Ідеальний <span>Профіль</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Преміум Дефіле', 'podruga_model_walk.gif', '<strong>Модельний фетиш:</strong> Її фірмова хода абсолютно босоніж на камеру. Шкіра підйому натягується при кожному кроці. Вона підходить впритул, наступає підошвою на твій стовбур і починає плавно розтирати твоє збудження.', 94)">
+            <div class="img-box"><img src="podruga_model_walk.gif"></div>
+            <div class="card-details"><div class="card-title">Преміум <span>Дефіле</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Дзеркальний Arch', 'podruga_mirror.jpg', '<strong>Глянець студії:</strong> Настя сідає прямо на велику блискучу дзеркальну підлогу, де її крутий підйом ідеально подвоюється у відображенні знизу. Чистий тріумф її ніг, які ти притискаєш до свого обличчя.', 89)">
+            <div class="img-box"><img src="podruga_mirror.jpg"></div>
+            <div class="card-details"><div class="card-title">Дзеркальний <span>Arch</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Червона Шпилька', 'podruga_red_dress.jpg', '<strong>Нічний бартер:</strong> Настя в обтислій червоній сукні похитує витонченою ніжкою у червоній шпильці. Вона хтиво посміхається і шепоче, що твій член вибухне, як тільки ти зубами розстебнеш її взуття і звільниш босі пальчики.', 91)">
+            <div class="img-box"><img src="podruga_red_dress.jpg"></div>
+            <div class="card-details"><div class="card-title">Червона <span>Шпилька</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Модельний Зріст', 'podruga_red_full.jpg', '<strong>Повна домінація:</strong> Вона стоїть на повний зріст у сексуальному вбранні, дивлячись на тебе зверху вниз. Її ноги здаються нескінченними. Вона повільно скидає підбори, змушуючи тебе роздягнутися і впасти перед її босими стопами.', 86)">
+            <div class="img-box"><img src="podruga_red_full.jpg"></div>
+            <div class="card-details"><div class="card-title">Повний <span>Модельний</span> Зріст</div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Особистий Боді-Купальник', 'podruga_bikini.jpg', '<strong>Абсолютний хардкор:</strong> Настя у мікро-боді з глибоким вирізом закидає ніжки тобі на плечі. Її гарячі підошви намертво затискають твій член, роблячи потужний футджоб, поки ти вибухаєш густим соком прямо їй на стопи.', 100)">
+            <div class="img-box"><img src="podruga_bikini.jpg"></div>
+            <div class="card-details"><div class="card-title">Особистий <span>Боді-Купальник</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Настінька: Вільний Слот', 'podruga_model5.jpg', '<strong>Преміум-ексклюзив:</strong> Секретний кадр з її особистої колекції. Вона підносить стопу впритул до об\'єктива. Ти буквально відчуваєш тепло її шкіри і пристрасно втягуєш її великий палець у рот, роблячи брудний і вологий засмокт.', 93)">
+            <div class="img-box"><img src="podruga_model5.jpg"></div>
+            <div class="card-details"><div class="card-title">Вільний <span>Слот Настя</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- NIKA -->
+<div id="nika" class="content-section">
+    <div class="grid-layout">
+        <div class="card" onclick="openStory('Nika: Шпилька для Сосунка', 'nika1.jpg', '<strong>VIP кімната:</strong> Ніка закидає свої стрункі ніжки на столик прямо перед твоїм обличчям. Її чорні босоніжки на шпильці ледь тримаються. Ти зубами знімаєш взуття, звільняючи її атласну босу підошву для жадібного вилизування.', 84)">
+            <div class="img-box"><img src="nika1.jpg"></div>
+            <div class="card-details"><div class="card-title">Шпилька для <span>Сосунка</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Nika: Ніжка на Вагу', 'nika2.jpg', '<strong>Повне підкорення:</strong> Вона кладе свою важку, але неймовірно витончену ніжку тобі на плече. Ти відчуваєш тиск її п\'ятки на своїй шкірі, поки твій язик пристрасно ковзає по крутому підйому її стопи.', 88)">
+            <div class="img-box"><img src="nika2.jpg"></div>
+            <div class="card-details"><div class="card-title">Ніжка на <span>Вагу</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Nika: Елітна Прогулянка', 'nika3.jpg', '<strong>Вулична спокуса:</strong> Прямо під час прогулянки вона вирішує роззутися. Її повністю босі, гарячі стопи ступають по гладкій поверхні, а ти слідуєш покірно за кожним її босим кроком, мріючи облизати її пальчики.', 79)">
+            <div class="img-box"><img src="nika3.jpg"></div>
+            <div class="card-details"><div class="card-title">Елітна <span>Прогулянка</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Nika: П\'єдестал Богині', 'nika4.jpg', '<strong>Домінація стоп:</strong> Вона сідає вище, ставлячи свої бездоганні стопи тобі на груди. Контраст її прохолодної дівочої шкіри та твого палаючого тіла зводить з розуму. Вона пальцями ніг починає пестити твій пах.', 92)">
+            <div class="img-box"><img src="nika4.jpg"></div>
+            <div class="card-details"><div class="card-title">П'єдестал для <span>Богині</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Nika: Неоновий Прогрів', 'nika5.jpg', '<strong>Фіолетовий неон:</strong> Кімната залита густим світлом. Ніка тягуче плює прямо на твій палаючий стовбур, а потім обхоплює його обома босими стопами, роблячи шалені вологі фрикції до самого елітного екстазу.', 97)">
+            <div class="img-box"><img src="nika5.jpg"></div>
+            <div class="card-details"><div class="card-title">Неоновий <span>Прогрів</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Nika: Фінал в Неоні', 'nika6.jpg', '<strong>Вибухова розрядка:</strong> На самій межі інтенсивного футджобу Ніка затискає твій орган пальцями обох ніг, ловлячи кожну гарячу краплю твого соку, який густо заливає її солодкі підошви та педикюр.', 100)">
+            <div class="img-box"><img src="nika6.jpg"></div>
+            <div class="card-details"><div class="card-title">Фінал в <span>Неоні</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Nika: Ніжня Ніжка на узбережжі', 'nika7.jpg', '<strong>Морська романтика:</strong> Вона сидить на піску, демонструючи ідеально чисту арку стопи. Твій язик робить перший довгий мазок від п\'ятки до пальчиків, змушуючи її голосно стогнати під шум хвиль.', 83)">
+            <div class="img-box"><img src="nika7.jpg"></div>
+            <div class="card-details"><div class="card-title">Ніжна <span>Ніжка</span> на узбережжі</div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- ANYA -->
+<div id="anya" class="content-section">
+    <div class="grid-layout">
+        <div class="card" onclick="openStory('Anya: Коктейль для Богині', 'anya1.jpg', '<strong>Флірт у барі:</strong> Вона ліниво попиває коктейль, тримаючи босоніжок на кінчиках пальців під столом. Її стопа плавно ковзає по твоїх колінах, обіцяючи гаряче продовження цієї ночі у VIP-номери.', 76)">
+            <div class="img-box"><img src="anya1.jpg"></div>
+            <div class="card-details"><div class="card-title">Коктейль для <span>Богині</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Anya: Біла Шпилька', 'anya2.jpg', '<strong>Таємний футджоб:</strong> Під столом ресторану Аня повністю роззувається. Її боса, гаряча стопа лягає на твій напружений пах, інтенсивно мастурбуючи твій член під тканиною, поки вона мило посміхається офіціанту.', 92)">
+            <div class="img-box"><img src="anya2.jpg"></div>
+            <div class="card-details"><div class="card-title">Біла <span>Шпилька</span> для сосунка</div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Anya: Морська Піна', 'anya3.jpg', '<strong>Вологий пляж:</strong> Хвилі омивають її розкішні стопи. Вона лягає на вологий пісок, закидаючи ніжки на тебе. Ти починаєш жадібно злизувати краплі солоної морської води з її крутого натягнутого підйому.', 81)">
+            <div class="img-box"><img src="anya3.jpg"></div>
+            <div class="card-details"><div class="card-title">Морська <span>Піна</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Anya: Блакитна Сорочка', 'anya_blue_shirt.jpg', '<strong>Ранковий екстаз:</strong> На Ані лише твоя об\'ємна блакитна сорочка. Вона прокидається й виставляє гладкі ніжки з ліжка. Ти заповзаєш перед нею, ловиш солодкі підошви й починаєш глибоко засмоктувати кожен пальчик.', 88)">
+            <div class="img-box"><img src="anya_blue_shirt.jpg"></div>
+            <div class="card-details"><div class="card-title">Блакитна <span>Сорочка</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Anya та Мама', 'anya_studio_mom.jpg', '<strong>Подвійна спокуса:</strong> Елітна зйомка в студії. Атмосфера зрілої та молодої краси. Обидві грайливо демонструють свої витончені підйоми стоп, змушуючи твою голову обертатися від вибору, чию п\'ятку облизати першою.', 85)">
+            <div class="img-box"><img src="anya_studio_mom.jpg"></div>
+            <div class="card-details"><div class="card-title">Аня та <span>Мама</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- РАНДОМ -->
+<div id="random" class="content-section">
+    <div class="grid-layout">
+        <div class="card" onclick="openStory('Рандом: Barter Богиня', 'random_barter.jpg', '<strong>Комерційний хардкор:</strong> Вона закидає ногу на твоє плече, демонструючи високий підйом. Ти платиш їм своїм повним підкоренням, засмоктуючи її пальці в рот, поки її вторая стопа інтенсивно треться об твій член.', 90)">
+            <div class="img-box"><img src="random_barter.jpg"></div>
+            <div class="card-details"><div class="card-title">Barter <span>Богиня</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Рандом: Оксана на Чиллі', 'random_oksana.jpg', '<strong>Літній розслабон:</strong> Оксана відпочиває на терасі. Її стопи пахнуть спекотним літом. Ти підходиш, береш її оксамитові п\'ятки й робиш масаж, який швидко переростає у вологе вилизування чутливих зон.', 78)">
+            <div class="img-box"><img src="random_oksana.jpg"></div>
+            <div class="card-details"><div class="card-title">Оксана на <span>Чиллі</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Рандом: Мая на Матраці', 'random_chill.jpg', '<strong>Пляжний чилл:</strong> Мая ніжиться на надувному матраці посеред басейну, виставивши свої гладкі пальчики до сонця. Ти підпливаєш знизу, ловиш її стопу під водою і починаєш палко пестити її язиком.', 82)">
+            <div class="img-box"><img src="random_chill.jpg"></div>
+            <div class="card-details"><div class="card-title">Мая на <span>Матраці</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Рандом: Оксана Силует', 'random_oksana2.jpg', '<strong>Еротичні тіні:</strong> Тільки силует її ідеальних ніг у напівтемряві спальні. Вона повільно піднімає ноги вгору, натягуючи арку, і заманює тебе своїм соковитим педикюром у фінальний нічний блуд.', 87)">
+            <div class="img-box"><img src="random_oksana2.jpg"></div>
+            <div class="card-details"><div class="card-title">Оксана: <span>Силует</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Рандом: Мая Скала Спокуси', 'random_maya_rock.jpg', '<strong>Дика природа Feat:</strong> Мая стоїть на скелі, омивається бризками. Її босі стопи міцно стискають камінь. Ти падаєш перед нею на коліна прямо на мокрий пісок, повністю підкоряючись величі її розкішних ніг.', 80)">
+            <div class="img-box"><img src="random_maya_rock.jpg"></div>
+            <div class="card-details"><div class="card-title">Мая: Скала <span>Спокуси</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+        <div class="card" onclick="openStory('Рандом: Вільний Слот 6', 'random3.jpg', '<strong>Таємна Богиня:</strong> Твій прихований преміум-ресурс. Вона щільно стискає твій гарячий член між двома чистими підошвами своїх стоп, роблячи глибокий і швидкий футджоб без допомоги рук, до повної розрядки.', 96)">
+            <div class="img-box"><img src="random3.jpg"></div>
+            <div class="card-details"><div class="card-title">Вільний <span>Слот 6</span></div><div class="click-hint">Клік для сюжету</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- СУПЕР-ІНТЕРАКТИВНИЙ LIGHTBOX З PREMIUM ЗУМОМ -->
+<div id="storyLightbox" class="lightbox">
+    <div class="lightbox-view">
+        <div class="zoom-wrapper" id="zoomWrapper">
+            <img id="lightboxImg" src="" alt="Premium Visual">
+        </div>
+        <!-- ПОВЗУНОК НАБЛИЖЕННЯ -->
+        <div class="zoom-controls">
+            <span style="font-size:10px; font-weight:bold; color:#444;">1X</span>
+            <input type="range" class="zoom-slider" id="zoomSlider" min="1" max="4" step="0.1" value="1">
+            <span style="font-size:10px; font-weight:bold; color:var(--accent);">4X</span>
+        </div>
+    </div>
+    
+    <div class="lightbox-sidebar">
+        <div class="sidebar-content">
+            <h3 id="lightboxTitle">Назва Сюжету</h3>
+            
+            <!-- ІНДИКАТОР ЗБУДЖЕННЯ -->
+            <div class="arousal-box">
+                <div class="arousal-header">
+                    <span>🔥 Рівень збудження стоп:</span>
+                    <span id="arousalPercent">0%</span>
+                </div>
+                <div class="arousal-bar-bg">
+                    <div class="arousal-bar-fill" id="arousalFill"></div>
+                </div>
+            </div>
+
+            <p id="lightboxText">Текст максимально гарячої еротичної історії...</p>
+            
+            <!-- ГЕНЕРАТОР НАКАЗІВ -->
+            <div class="bonus-order-box" id="bonusOrderBox"></div>
+            <button class="btn-upgrade-ecstasy" onclick="generateBonusOrder()">🔥 Поглибити Екстаз (Додати брудний наказ)</button>
+        </div>
+        <button class="close-lightbox" onclick="closeStory()">❌ Закрити Сценарій</button>
+    </div>
+</div>
+
+<script>
+    // База даних для Колеса Фортуни
+    const wheelPrizes = [
+        { title: "Настінька: POV Екстаз", img: "podruga_pov.jpg", text: "«Заплющ очі. Уяви, як її теплий, вологий язик плавно обволікає твій довший палець ніжки, а потім вона змушує тебе повністю втягнути її солодку п'ятку до себе в рот...»", arousal: 98 },
+        { title: "Ніка: Фіолетовий Неон", img: "nika5.jpg", text: "«VIP-кімната клубу. Босі шовкові підошви Ніки повільно й щільно ковзають по твоїх стегнах, злизуючи змазку та пристрасно пестячи пальчиками твій гарячий пах...»", arousal: 95 },
+        { title: "Аня: Біла Шпилька", img: "anya2.jpg", text: "«Атмосфера преміум-ресторану під столом. Ти непомітно розстібаєш ремінець її босоніжок, і її повністю боса стопа плавно лягає тобі на пах, стискаючи твій член пальцями ніг...»", arousal: 91 },
+        { title: "Настя: Модельне Боді", img: "podruga_bikini.jpg", text: "«Вона стоїть перед великим дзеркалом у вирізаному чорному боді-купальнику, намертво стискаючи твій палаючий орган між двома атласними підошвами своїх стоп...»", arousal: 100 },
+        { title: "Рандом: Barter Екстаз", img: "random_barter.jpg", text: "«Повне підкорення Богині. Твій язик робить перший вологий мазок від самої п'ятки вздовж усього крутого натягнутого підйому, поки вона душить твій член ніжними стопами...»", arousal: 88 }
+    ];
+
+    const extraOrders = [
+        "🥵 <strong>НАКАЗ:</strong> «А тепер змусь її повільно, тягуче плюнути на твій стовбур, після чого розігрій її стопи шаленим темпом трення!»",
+        "👅 <strong>НАКАЗ:</strong> «Зафіксуй її кісточки руками, нахилися вперед і максимально глибоко засмокчи її довший палець, вилизуючи простір між кожним нігтем!»",
+        "💦 <strong>НАКАЗ:</strong> «Кончай прямо їй на соковитий педикюр, а потім змусь її розмазати твій сік по своїх ніжних підошвах, дивлячись тобі прямо в очі!»",
+        "🦶 <strong>НАКАЗ:</strong> «Зменш темп. Нехай вона ліниво душить твій член п'ятками, поки ти ніжно обціловуєш її круту натягнуту арку стопи»"
+    ];
+
+    let isSpinning = false;
+
+    function spinTheWheel() {
+        if (isSpinning) return;
+        isSpinning = true;
+
+        const wheel = document.getElementById('fortuneWheel');
+        const randomDegree = Math.floor(Math.random() * 360) + 1800; 
+        wheel.style.transform = `rotate(${randomDegree}deg)`;
+
+        setTimeout(() => {
+            isSpinning = false;
+            const randomPrize = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+            openStory(`🔮 Доля: ${randomPrize.title}`, randomPrize.img, randomPrize.text, randomPrize.arousal);
+        }, 4000);
+    }
+
+    // ЛОГІКА PREMIUM ЛАЙТБОКСУ З ЗУМОМ ТА ПЕРЕТЯГУВАННЯМ
+    const img = document.getElementById('lightboxImg');
+    const slider = document.getElementById('zoomSlider');
+    const wrapper = document.getElementById('zoomWrapper');
+
+    let scale = 1;
+    let isDragging = false;
+    let startX, startY, currentX = 0, currentY = 0;
+
+    // Управління зумом через повзунок
+    slider.addEventListener('input', (e) => {
+        scale = e.target.value;
+        updateTransform();
+    });
+
+    // Управління зумом через колесо мишки всередині Lightbox
+    wrapper.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.deltaY < 0) {
+            scale = Math.min(scale + 0.2, 4);
+        } else {
+            scale = Math.max(scale - 0.2, 1);
+        }
+        slider.value = scale;
+        updateTransform();
+    });
+
+    // Логіка перетягування (Drag & Drop) збільшеного зображення
+    img.addEventListener('mousedown', (e) => {
+        if (scale <= 1) return;
+        isDragging = true;
+        startX = e.clientX - currentX;
+        startY = e.clientY - currentY;
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        currentX = e.clientX - startX;
+        currentY = e.clientY - startY;
+        updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Підтримка тач-скрінів для смартфонів (перетягування пальцем)
+    img.addEventListener('touchstart', (e) => {
+        if (scale <= 1) return;
+        isDragging = true;
+        startX = e.touches[0].clientX - currentX;
+        startY = e.touches[0].clientY - currentY;
+    });
+    img.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX - startX;
+        currentY = e.touches[0].clientY - startY;
+        updateTransform();
+    });
+    img.addEventListener('touchend', () => { isDragging = false; });
+
+    function updateTransform() {
+        if (scale <= 1) { currentX = 0; currentY = 0; }
+        img.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+    }
+
+    function openStory(title, imgSrc, text, arousalVal) {
+        // Скидаємо зум та позицію
+        scale = 1; currentX = 0; currentY = 0;
+        slider.value = 1;
+        updateTransform();
+
+        document.getElementById('lightboxTitle').innerText = title;
+        img.src = imgSrc;
+        document.getElementById('lightboxText').innerHTML = text;
+        document.getElementById('bonusOrderBox').style.display = 'none';
+        
+        document.getElementById('storyLightbox').style.display = 'grid';
+        document.body.style.overflow = 'hidden';
+
+        // Анімація шкали збудження
+        setTimeout(() => {
+            document.getElementById('arousalPercent').innerText = arousalVal + '%';
+            document.getElementById('arousalFill').style.width = arousalVal + '%';
+        }, 100);
+    }
+
+    function generateBonusOrder() {
+        const box = document.getElementById('bonusOrderBox');
+        const randomOrder = extraOrders[Math.floor(Math.random() * extraOrders.length)];
+        box.innerHTML = randomOrder;
+        box.style.display = 'block';
+    }
+
+    function closeStory() {
+        document.getElementById('storyLightbox').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.getElementById('arousalFill').style.width = '0%';
+    }
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).style.display = 'block';
+        btn.classList.add('active');
+        if(tabId !== 'home') {
+            document.getElementById('fortuneWheel').style.transform = `rotate(0deg)`;
+        }
+    }
+</script>
+
+</body>
+</html>
